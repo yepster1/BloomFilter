@@ -1,0 +1,19 @@
+{
+  "name": "bloomfilter",
+  "version": "1.0.0",
+  "description": "Cary's implementation of a basic bloom filter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yepster1/BloomFilter.git"
+  },
+  "author": "Cary Small",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yepster1/BloomFilter/issues"
+  },
+  "homepage": "https://github.com/yepster1/BloomFilter#readme"
+}
