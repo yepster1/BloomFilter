@@ -4,7 +4,8 @@
   "description": "Cary's implementation of a basic bloom filter",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodejs src/filter.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -12,8 +13,16 @@
   },
   "author": "Cary Small",
   "license": "ISC",
+  "dependencies": {
+    "bit-array": "0.2.2",
+    "math.js": "1.1.40",
+    "md5": "^2.2.1"
+  },
   "bugs": {
     "url": "https://github.com/yepster1/BloomFilter/issues"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.2"
   },
   "homepage": "https://github.com/yepster1/BloomFilter#readme"
 }
