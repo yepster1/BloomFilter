@@ -4,7 +4,7 @@
   "description": "Cary's implementation of a basic bloom filter",
   "main": "index.js",
   "scripts": {
-    "start": "nodejs src/filter.js",
+    "start": "node index.js",
     "test": "mocha"
   },
   "repository": {
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "bit-array": "0.2.2",
+    "fs": "0.0.1-security",
     "math.js": "1.1.40",
     "md5": "^2.2.1"
   },

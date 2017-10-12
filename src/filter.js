@@ -29,8 +29,7 @@ function Filter(file){
 }
 
 function getHashFunction(item,m){
-	var hashed = md5(item).substring(0,10);
-	//console.log(parseInt(hashed,16)%28);
+	var hashed = md5(item).substring(0,17); //make the md5 smaller as this will not change the value and I dont want to lose precicision when I convert to an int
 	return parseInt(hashed,16)%m;
 }
 
