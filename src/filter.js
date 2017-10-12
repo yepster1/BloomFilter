@@ -6,7 +6,7 @@ const bitArray = require("bit-array");
 const averageEnglishWord = 5.1;
 const e = 2.71828; //approximate value for e
 
-function innitateBloomFilter(file){
+function Filter(file){
 	var file = typeof file !== "undefined" ? file : "words.txt";
 	const stats = fs.statSync(file); //gets all the stats from the file that we are going to get data from so we assume a n value
 	const fileSizeInBytes = stats.size; //each character is 1 byte.
@@ -14,46 +14,43 @@ function innitateBloomFilter(file){
 	//we can assume that the average word size will hold to the standard of english. therefore our n will approximetly be
 	this.n = fileSizeInBytes/averageEnglishWord;
 
-	console.log("Their are approximetly " + n + " words in the test set");
+	console.log("Their are approximetly " + this.n + " words in the test set");
+	this.p = 0.01; //1 % false positive rate
 
-	this.m = math.pow(2,24); //using a 4 meg bloom filter
+	this.m = math.round(this.n * -1.44 * math.log(this.p,2)) //using optimal m for the size of n
+	this.k = math.round(-math.log(this.p,2)); // using optimal k
+	this.bloomFilter = new bitArray(this.m); //innitate the bloom filter
 
-	this.k = math.round(getK(n,m)); // get the optimal amount of hashes to use
+	this.add = add.bind(this);
+	this.check = check.bind(this);
 
-	this.bloomFilter = new bitArray(m); //innitate the bloom filter
-
-
-	console.log("k value is " + k);
+	console.log("the bit array is " + this.m + " bits long")
+	console.log("k value is " + this.k);
 }
 
-function getHashFunction(item){
-	var hashed = md5(item);
-	return parseInt(string,16)%this.m;
+function getHashFunction(item,m){
+	var hashed = md5(item).substring(0,10);
+	//console.log(parseInt(hashed,16)%28);
+	return parseInt(hashed,16)%m;
 }
 
-function addItem(item){
-	for(var i = 0; i < k; i++){
-		this.bloomFilter.set(getHashFunction(item + k),true) //add k each time as this will completely change the hash output
+function add(item){
+	for(var i = 0; i < this.k; i++){
+		var val = getHashFunction(item + i,this.m);
+		this.bloomFilter.set(val,true) //add k each time as this will completely change the hash output
 	}
 }
 
-function getItem(){
-	for(var i = 0; i < k; i++){
-		if(this.bloomFilter.get(getHashFunction(item + k)) == false){
+function check(item){
+	for(var i = 0; i < this.k; i++){
+		if(this.bloomFilter.get(getHashFunction(item + i,this.m)) == false){
+			//console.log("k is " + i + " false");
 			return false; //this is definitely not in the bloom filter
 		}
+		//console.log("k is " + i + " true");
 	}
 	return true; //there is a chance that this item is in the bloom filter
 }
 
-function getPValueFromNandM(n,m){
-	return math.pow(e,(-(m/n)*math.pow(math.log(2,e),2))); //get what the p value would be using the formula found on wikipidia
-}
 
-function getK(n,m){
-	return (m/n)*math.log(2,e);
-}
-
-module.exports = {
-	getPValueFromNandM: getPValueFromNandM
-}
+module.exports = Filter;
